@@ -11,3 +11,29 @@ data class BuyItem(
     val price: Float = 0.0f,
     val comprado: Boolean = false
 )
+
+val buyModel = BuyModel(
+    id = null, items = listOf(
+        BuyItem(
+            id = null, name = "Pepinos", price = 13f, comprado = false
+        ),
+        BuyItem(
+            id = null, name = "Tomates", price = 15f, comprado = false
+        ),
+        BuyItem(
+            id = null, name = "Aji", price = 25f, comprado = true
+        ),
+        BuyItem(
+            id = null, name = "Cebolla", price = 103f, comprado = true
+        ),
+        BuyItem(
+            id = null, name = "Pollo", price = 1333f, comprado = false
+        ),
+        BuyItem(
+            id = null, name = "Lechuga", price = 13f, comprado = false
+        ),
+        BuyItem(
+            id = null, name = "Ajo", price = 1300f, comprado = true
+        ),
+    )
+)

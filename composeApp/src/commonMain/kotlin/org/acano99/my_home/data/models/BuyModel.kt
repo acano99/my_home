@@ -35,5 +35,11 @@ val buyModel = BuyModel(
         BuyItem(
             id = null, name = "Ajo", price = 1300f, comprado = true
         ),
+        BuyItem(
+            id = null, name = "Platano de fruta", price = 13f, comprado = true
+        ),
+        BuyItem(
+            id = null, name = "Naranja agria", price = 100f, comprado = true
+        ),
     )
 )

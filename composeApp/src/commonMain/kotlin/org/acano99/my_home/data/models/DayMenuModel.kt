@@ -9,11 +9,11 @@ enum class WeekDay {
 }
 
 data class DayMenuModel(
-    val id: Int?,
-    val type: MenuType?,
-    val food: String,
-    val weekDay: WeekDay?,
-    val date: String?
+    val id: Int? = null,
+    val type: MenuType? = null,
+    val food: String = "",
+    val weekDay: WeekDay? = null,
+    val date: String = ""
 )
 
 val dayMenu = listOf<DayMenuModel>(

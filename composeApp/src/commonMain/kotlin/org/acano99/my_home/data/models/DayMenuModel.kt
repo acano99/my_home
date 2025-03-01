@@ -11,6 +11,38 @@ enum class WeekDay {
 data class DayMenuModel(
     val id: Int?,
     val type: MenuType?,
-    val food: List<String>,
-    val weekDay: WeekDay?
+    val food: String,
+    val weekDay: WeekDay?,
+    val date: String?
+)
+
+val dayMenu = listOf<DayMenuModel>(
+    DayMenuModel(
+        id = 0,
+        type = MenuType.Desayuno,
+        food = "Pan con tomate",
+        weekDay = WeekDay.Lunes,
+        date = ""
+    ),
+    DayMenuModel(
+        id = 0,
+        type = MenuType.Almuerzo,
+        food = "Arroz, chicharos, hambuerguesa",
+        weekDay = WeekDay.Lunes,
+        date = ""
+    ),
+    DayMenuModel(
+        id = 0,
+        type = MenuType.Merienda,
+        food = "Pan con mayonesa, refresco de guanabana",
+        weekDay = WeekDay.Lunes,
+        date = ""
+    ),
+    DayMenuModel(
+        id = 0,
+        type = MenuType.Comida,
+        food = "Spaguetti",
+        weekDay = WeekDay.Lunes,
+        date = ""
+    ),
 )

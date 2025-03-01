@@ -8,6 +8,7 @@ import org.acano99.my_home.ui.theme.highPadding
 import org.acano99.my_home.ui.theme.mediumPadding
 import org.acano99.my_home.ui.theme.minPadding
 import org.acano99.my_home.ui.theme.smallPadding
+import org.acano99.my_home.ui.theme.veryHighPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
 
 @Composable
@@ -24,3 +25,6 @@ fun MediumSpacer() = Spacer(Modifier.height(mediumPadding))
 
 @Composable
 fun HigSpacer() = Spacer(Modifier.height(highPadding))
+
+@Composable
+fun VeryHigSpacer() = Spacer(Modifier.height(veryHighPadding))

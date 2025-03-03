@@ -2,6 +2,7 @@ package org.acano99.my_home.ui.composables
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.acano99.my_home.ui.theme.highPadding
@@ -30,19 +31,19 @@ fun VerticalHigSpacer() = Spacer(Modifier.height(highPadding))
 fun VerticalVeryHigSpacer() = Spacer(Modifier.height(veryHighPadding))
 
 @Composable
-fun HorizontalMinSpacer() = Spacer(Modifier.height(minPadding))
+fun HorizontalMinSpacer() = Spacer(Modifier.width(minPadding))
 
 @Composable
-fun HorizontalVerySmallSpacer() = Spacer(Modifier.height(verySmallPadding))
+fun HorizontalVerySmallSpacer() = Spacer(Modifier.width(verySmallPadding))
 
 @Composable
-fun HorizontalSmallSpacer() = Spacer(Modifier.height(smallPadding))
+fun HorizontalSmallSpacer() = Spacer(Modifier.width(smallPadding))
 
 @Composable
-fun HorizontalMediumSpacer() = Spacer(Modifier.height(mediumPadding))
+fun HorizontalMediumSpacer() = Spacer(Modifier.width(mediumPadding))
 
 @Composable
-fun HorizontalHigSpacer() = Spacer(Modifier.height(highPadding))
+fun HorizontalHigSpacer() = Spacer(Modifier.width(highPadding))
 
 @Composable
-fun HorizontalVeryHigSpacer() = Spacer(Modifier.height(veryHighPadding))
+fun HorizontalVeryHigSpacer() = Spacer(Modifier.width(veryHighPadding))

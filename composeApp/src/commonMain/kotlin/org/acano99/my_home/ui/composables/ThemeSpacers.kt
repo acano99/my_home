@@ -12,19 +12,37 @@ import org.acano99.my_home.ui.theme.veryHighPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
 
 @Composable
-fun MinSpacer() = Spacer(Modifier.height(minPadding))
+fun VerticalMinSpacer() = Spacer(Modifier.height(minPadding))
 
 @Composable
-fun VerySmallSpacer() = Spacer(Modifier.height(verySmallPadding))
+fun VerticalVerySmallSpacer() = Spacer(Modifier.height(verySmallPadding))
 
 @Composable
-fun SmallSpacer() = Spacer(Modifier.height(smallPadding))
+fun VerticalSmallSpacer() = Spacer(Modifier.height(smallPadding))
 
 @Composable
-fun MediumSpacer() = Spacer(Modifier.height(mediumPadding))
+fun VerticalMediumSpacer() = Spacer(Modifier.height(mediumPadding))
 
 @Composable
-fun HigSpacer() = Spacer(Modifier.height(highPadding))
+fun VerticalHigSpacer() = Spacer(Modifier.height(highPadding))
 
 @Composable
-fun VeryHigSpacer() = Spacer(Modifier.height(veryHighPadding))
+fun VerticalVeryHigSpacer() = Spacer(Modifier.height(veryHighPadding))
+
+@Composable
+fun HorizontalMinSpacer() = Spacer(Modifier.height(minPadding))
+
+@Composable
+fun HorizontalVerySmallSpacer() = Spacer(Modifier.height(verySmallPadding))
+
+@Composable
+fun HorizontalSmallSpacer() = Spacer(Modifier.height(smallPadding))
+
+@Composable
+fun HorizontalMediumSpacer() = Spacer(Modifier.height(mediumPadding))
+
+@Composable
+fun HorizontalHigSpacer() = Spacer(Modifier.height(highPadding))
+
+@Composable
+fun HorizontalVeryHigSpacer() = Spacer(Modifier.height(veryHighPadding))

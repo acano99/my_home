@@ -75,7 +75,7 @@ fun HomeScreen(navController: NavController? = null) {
     ) { innerPadding ->
         Column(
             modifier = Modifier.fillMaxSize().padding(innerPadding)
-                .padding(horizontal = mediumPadding)
+                .padding(mediumPadding)
                 .verticalScroll(rememberScrollState())
         ) {
             ThemeCard(modifier = Modifier.fillMaxWidth()) {

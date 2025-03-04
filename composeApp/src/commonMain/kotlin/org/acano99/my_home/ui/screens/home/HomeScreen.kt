@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import myhome.composeapp.generated.resources.Res
 import myhome.composeapp.generated.resources.comidasPlanificadas
 import myhome.composeapp.generated.resources.comprasPlanificadas
@@ -56,12 +57,16 @@ import org.acano99.my_home.ui.theme.verySmallPadding
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { ThemeTopBar(title = "Home") },
         floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
+            FloatingActionButton(onClick = {
+                navController.let {
+                    navController?.navigate("day")
+                }
+            }) {
                 Icon(imageVector = Icons.Default.AddCircle, contentDescription = "")
             }
         }
@@ -85,6 +90,7 @@ fun HomeScreen() {
             BuyList()
             VerticalHigSpacer()
             Pagos()
+            VerticalVeryHigSpacer()
             VerticalVeryHigSpacer()
         }
     }

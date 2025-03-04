@@ -1,8 +1,5 @@
 package org.acano99.my_home.ui.screens.home
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -12,12 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -35,19 +32,25 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import myhome.composeapp.generated.resources.Res
+import myhome.composeapp.generated.resources.comidasPlanificadas
+import myhome.composeapp.generated.resources.comprasPlanificadas
+import myhome.composeapp.generated.resources.pagosPlanificados
 import myhome.composeapp.generated.resources.today
 import org.acano99.my_home.data.models.MenuType
 import org.acano99.my_home.data.models.buyModel
 import org.acano99.my_home.data.models.dayMenu
-import org.acano99.my_home.ui.composables.HorizontalMinSpacer
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeCard
 import org.acano99.my_home.ui.composables.ThemeFoodIcon
+import org.acano99.my_home.ui.composables.ThemeIconHeader
+import org.acano99.my_home.ui.composables.ThemeInvoice
 import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.composables.VerticalMinSpacer
 import org.acano99.my_home.ui.composables.VerticalSmallSpacer
+import org.acano99.my_home.ui.composables.VerticalVeryHigSpacer
 import org.acano99.my_home.ui.theme.mediumPadding
+import org.acano99.my_home.ui.theme.minPadding
 import org.acano99.my_home.ui.theme.smallPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
 import org.jetbrains.compose.resources.stringResource
@@ -82,7 +85,7 @@ fun HomeScreen() {
             BuyList()
             VerticalHigSpacer()
             Pagos()
-            VerticalHigSpacer()
+            VerticalVeryHigSpacer()
         }
     }
 }
@@ -120,16 +123,10 @@ fun Header(modifier: Modifier = Modifier, title: String) {
 @Composable
 fun Foods() {
     Column(modifier = Modifier.padding(horizontal = smallPadding)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                modifier = Modifier.size(28.dp).border(
-                    border = BorderStroke(width = 1.dp, Color.Black),
-                    shape = RoundedCornerShape(24.dp)
-                )
-            )
-            HorizontalMinSpacer()
-            Text("Comidas planificadas", fontSize = 20.sp, fontWeight = FontWeight.W500)
-        }
+        ThemeIconHeader(
+            imageVector = Icons.Default.ShoppingCart,
+            title = stringResource(Res.string.comidasPlanificadas)
+        )
         VerticalMinSpacer()
         if (dayMenu.isNotEmpty()) {
             dayMenu.map { menu ->
@@ -182,48 +179,53 @@ fun Foods() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BuyList() {
-    Column(modifier = Modifier.padding(horizontal = smallPadding)) {
-        Text("Compras planificadas", fontSize = 24.sp, fontWeight = FontWeight.W500)
-        VerticalMinSpacer()
+    ThemeCard {
+        Column(modifier = Modifier.padding(horizontal = smallPadding)) {
+            ThemeIconHeader(
+                imageVector = Icons.Default.ShoppingCart,
+                title = stringResource(Res.string.comprasPlanificadas)
+            )
+            VerticalMinSpacer()
 
-        if (buyModel.items.isNotEmpty()) {
-            FlowRow(modifier = Modifier.fillMaxWidth()) {
-                repeat(buyModel.items.size) {
-                    Text(
-                        text = buyModel.items[it].name,
-                        textDecoration = if (buyModel.items[it].comprado) TextDecoration.LineThrough else null,
-                        fontWeight = FontWeight.W500,
-                        fontSize = 18.sp,
-                        lineHeight = 24.sp,
-                        modifier = Modifier.padding(end = mediumPadding)
-                    )
+            if (buyModel.items.isNotEmpty()) {
+                FlowRow(modifier = Modifier.fillMaxWidth()) {
+
+                    repeat(buyModel.items.size) { item ->
+                        ElevatedCard(modifier = Modifier.padding(minPadding)) {
+                            Text(
+                                text = buyModel.items[item].name,
+                                textDecoration = if (buyModel.items[item].comprado) TextDecoration.LineThrough else null,
+                                fontWeight = FontWeight.W500,
+                                fontSize = 18.sp,
+                                lineHeight = 24.sp,
+                                modifier = Modifier.padding(
+                                    vertical = minPadding,
+                                    horizontal = verySmallPadding
+                                )
+                            )
+                        }
+                    }
                 }
+            } else {
+                Text("No hay compras planificadas")
             }
-        } else {
-            Text("No hay compras planificadas")
         }
     }
 }
 
 @Composable
 fun Pagos() {
-    Column(modifier = Modifier.padding(horizontal = smallPadding)) {
-        Text("Pagos planificados", fontSize = 24.sp, fontWeight = FontWeight.W500)
-        VerticalSmallSpacer()
-        (1..3).map {
-            Box(
-                modifier = Modifier.fillMaxWidth().border(
-                    BorderStroke(width = 1.dp, color = Color.Black),
-                    shape = RoundedCornerShape(verySmallPadding)
-                )
-            ) {
-                Column(modifier = Modifier.padding(verySmallPadding)) {
-                    Text("Factura XXXXX", fontSize = 18.sp, fontWeight = FontWeight.W500)
-                    VerticalMinSpacer()
-                    Text("150.00 Cup")
-                }
-            }
+    ThemeCard {
+        Column(modifier = Modifier.padding(horizontal = smallPadding)) {
+            ThemeIconHeader(
+                imageVector = Icons.Default.ShoppingCart,
+                title = stringResource(Res.string.pagosPlanificados)
+            )
             VerticalSmallSpacer()
+            (1..3).map {
+                ThemeInvoice(modifier = Modifier.fillMaxWidth().padding(horizontal = minPadding))
+                VerticalSmallSpacer()
+            }
         }
     }
 }

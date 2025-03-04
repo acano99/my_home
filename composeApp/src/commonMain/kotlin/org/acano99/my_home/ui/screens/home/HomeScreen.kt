@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -49,10 +51,10 @@ import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.composables.VerticalMinSpacer
 import org.acano99.my_home.ui.composables.VerticalSmallSpacer
-import org.acano99.my_home.ui.composables.VerticalVeryHigSpacer
 import org.acano99.my_home.ui.theme.mediumPadding
 import org.acano99.my_home.ui.theme.minPadding
 import org.acano99.my_home.ui.theme.smallPadding
+import org.acano99.my_home.ui.theme.veryHighPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
 import org.jetbrains.compose.resources.stringResource
 
@@ -90,8 +92,7 @@ fun HomeScreen(navController: NavController? = null) {
             BuyList()
             VerticalHigSpacer()
             Pagos()
-            VerticalVeryHigSpacer()
-            VerticalVeryHigSpacer()
+            Spacer(Modifier.height(veryHighPadding * 3))
         }
     }
 }
@@ -168,7 +169,7 @@ fun Foods() {
                                     fontSize = 18.sp
                                 )
                             ) {
-                                append("${menu.type}: ")
+                                append("${menu.type}")
                             }
                             append("\n")
                             append(menu.food)

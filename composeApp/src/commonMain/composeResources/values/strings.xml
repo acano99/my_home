@@ -3,4 +3,7 @@
     <string name="comidasPlanificadas">Comidas Planificadas</string>
     <string name="comprasPlanificadas">Compras Planificadas</string>
     <string name="pagosPlanificados">Pagos Planificados</string>
+    <string name="presupuesto">Presupuesto</string>
+    <string name="planificado">Planificado</string>
+    <string name="restante">Restante</string>
 </resources>

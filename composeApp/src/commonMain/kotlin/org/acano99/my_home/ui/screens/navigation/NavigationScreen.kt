@@ -10,7 +10,7 @@ import org.acano99.my_home.ui.screens.home.HomeScreen
 @Composable
 fun NavigationScreen() {
     val navHostController = rememberNavController()
-    NavHost(navController = navHostController, startDestination = "home") {
+    NavHost(navController = navHostController, startDestination = "day") {
         composable(route = "home") {
             HomeScreen(navController = navHostController)
         }

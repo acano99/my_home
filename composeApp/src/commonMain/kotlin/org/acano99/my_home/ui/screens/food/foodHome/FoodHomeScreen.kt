@@ -64,7 +64,7 @@ fun FoodHomeScreen(navController: NavController? = null) {
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.let {
-                    navController?.navigate("day")
+                    navController?.navigate("addFood")
                 }
             }) {
                 Icon(imageVector = Icons.Default.AddCircle, contentDescription = "")

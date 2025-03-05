@@ -17,6 +17,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,9 +51,17 @@ import org.acano99.my_home.ui.theme.smallPadding
 import org.acano99.my_home.ui.theme.veryHighPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
-fun FoodHomeScreen(navController: NavController? = null) {
+fun FoodHomeScreen(
+    navController: NavController? = null,
+    viewModel: FoodHomeViewModel = koinViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { ThemeTopBar(title = "Comidas") },

@@ -1,4 +1,4 @@
-package org.acano99.my_home.ui.screens.home
+package org.acano99.my_home.ui.screens.food.foodHome
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
@@ -31,19 +29,19 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import myhome.composeapp.generated.resources.Res
 import myhome.composeapp.generated.resources.comidasPlanificadas
 import myhome.composeapp.generated.resources.comprasPlanificadas
 import myhome.composeapp.generated.resources.pagosPlanificados
-import myhome.composeapp.generated.resources.today
 import org.acano99.my_home.data.models.MenuType
 import org.acano99.my_home.data.models.buyModel
 import org.acano99.my_home.data.models.dayMenu
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
+import org.acano99.my_home.ui.composables.ThemeBottomNavigationBar
 import org.acano99.my_home.ui.composables.ThemeCard
+import org.acano99.my_home.ui.composables.ThemeDateHeader
 import org.acano99.my_home.ui.composables.ThemeFoodIcon
 import org.acano99.my_home.ui.composables.ThemeIconHeader
 import org.acano99.my_home.ui.composables.ThemeInvoice
@@ -59,10 +57,10 @@ import org.acano99.my_home.ui.theme.verySmallPadding
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun HomeScreen(navController: NavController? = null) {
+fun FoodHomeScreen(navController: NavController? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { ThemeTopBar(title = "Home") },
+        topBar = { ThemeTopBar(title = "Comidas") },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.let {
@@ -71,65 +69,29 @@ fun HomeScreen(navController: NavController? = null) {
             }) {
                 Icon(imageVector = Icons.Default.AddCircle, contentDescription = "")
             }
-        }
+        },
+        bottomBar = { ThemeBottomNavigationBar() }
     ) { innerPadding ->
         Column(
             modifier = Modifier.fillMaxSize().padding(innerPadding)
                 .padding(mediumPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-            ThemeCard(modifier = Modifier.fillMaxWidth()) {
-                Header(
-                    modifier = Modifier.fillMaxWidth().padding(start = smallPadding),
-                    title = "12 de febrero"
-                )
-            }
+            ThemeDateHeader(
+                modifier = Modifier.fillMaxWidth().padding(start = smallPadding),
+                title = "12 de febrero"
+            )
             VerticalHigSpacer()
-            ThemeCard(modifier = Modifier.fillMaxWidth()) {
-                Foods()
-            }
-            VerticalHigSpacer()
-            BuyList()
-            VerticalHigSpacer()
-            Pagos()
+            Foods()
             Spacer(Modifier.height(veryHighPadding * 3))
         }
     }
 }
 
-@Composable
-fun Header(modifier: Modifier = Modifier, title: String) {
-    val header = stringResource(Res.string.today)
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        Icon(
-            modifier = Modifier.size(48.dp),
-            imageVector = Icons.Default.DateRange,
-            contentDescription = null
-        )
-        HorizontalVerySmallSpacer()
-        Text(text = buildAnnotatedString {
-            withStyle(style = ParagraphStyle(lineHeight = 34.sp)) {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.W500)) {
-                    append(header)
-                }
-                append("\n")
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.W700,
-                        fontSize = 32.sp
-                    )
-                ) {
-                    append(title)
-                }
-            }
-
-        })
-    }
-}
 
 @Composable
 fun Foods() {
-    Column(modifier = Modifier.padding(horizontal = smallPadding)) {
+    ThemeCard {
         ThemeIconHeader(
             imageVector = Icons.Default.ShoppingCart,
             title = stringResource(Res.string.comidasPlanificadas)

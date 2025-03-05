@@ -9,7 +9,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.acano99.my_home.ui.theme.minPadding
 import org.acano99.my_home.ui.theme.smallPadding
 
 @Composable
@@ -21,7 +20,7 @@ fun ThemeCard(
     ElevatedCard(modifier = modifier, colors = colors) {
         Column(
             modifier = Modifier.fillMaxWidth()
-                .padding(vertical = smallPadding, horizontal = minPadding), content = content
+                .padding(vertical = smallPadding, horizontal = smallPadding), content = content
         )
     }
 }

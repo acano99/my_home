@@ -44,7 +44,9 @@ fun ThemeDialogDatePicker(
                         Text("Cancelar")
                     }
                     HorizontalSmallSpacer()
-                    OutlinedButton(onClick = { onAcceptRequest(state.selectedDateMillis ?: 0) }) {
+                    OutlinedButton(onClick = {
+                        onAcceptRequest(state.selectedDateMillis ?: 0)
+                    }) {
                         Text("Aceptar")
                     }
                 }

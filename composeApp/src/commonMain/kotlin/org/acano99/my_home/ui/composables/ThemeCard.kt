@@ -24,3 +24,18 @@ fun ThemeCard(
         )
     }
 }
+
+@Composable
+fun ThemeCard(
+    modifier: Modifier = Modifier,
+    colors: CardColors = CardDefaults.elevatedCardColors(),
+    onClick: () -> Unit,
+    content: @Composable (ColumnScope) -> Unit
+) {
+    ElevatedCard(modifier = modifier, colors = colors, onClick = onClick) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+                .padding(vertical = smallPadding, horizontal = smallPadding), content = content
+        )
+    }
+}

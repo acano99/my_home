@@ -12,13 +12,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,12 +37,13 @@ import androidx.navigation.NavController
 import myhome.composeapp.generated.resources.Res
 import myhome.composeapp.generated.resources.comidasPlanificadas
 import myhome.composeapp.generated.resources.pagosPlanificados
+import org.acano99.my_home.data.models.DayMenuModel
 import org.acano99.my_home.data.models.MenuType
-import org.acano99.my_home.data.models.dayMenu
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeBottomNavigationBar
 import org.acano99.my_home.ui.composables.ThemeCard
 import org.acano99.my_home.ui.composables.ThemeDateHeader
+import org.acano99.my_home.ui.composables.ThemeDialogDatePicker
 import org.acano99.my_home.ui.composables.ThemeFoodIcon
 import org.acano99.my_home.ui.composables.ThemeIconHeader
 import org.acano99.my_home.ui.composables.ThemeInvoice
@@ -45,6 +51,8 @@ import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.composables.VerticalMinSpacer
 import org.acano99.my_home.ui.composables.VerticalSmallSpacer
+import org.acano99.my_home.ui.screens.common.ErrorScreen
+import org.acano99.my_home.ui.screens.common.LoadingScreen
 import org.acano99.my_home.ui.theme.mediumPadding
 import org.acano99.my_home.ui.theme.minPadding
 import org.acano99.my_home.ui.theme.smallPadding
@@ -54,13 +62,17 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
+@OptIn(KoinExperimentalAPI::class, ExperimentalMaterial3Api::class)
 @Composable
 fun FoodHomeScreen(
     navController: NavController? = null,
     viewModel: FoodHomeViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = 1578096000000,
+    )
+    var showSelectedDatePicker by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -76,26 +88,44 @@ fun FoodHomeScreen(
         },
         bottomBar = { ThemeBottomNavigationBar() }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(innerPadding)
-                .padding(mediumPadding)
-                .verticalScroll(rememberScrollState())
-        ) {
-            ThemeDateHeader(
-                modifier = Modifier.fillMaxWidth().padding(start = smallPadding),
-                title = "12 de febrero"
+        when {
+            uiState.loading -> LoadingScreen(
+                modifier = Modifier.fillMaxSize().padding(innerPadding)
             )
-            VerticalHigSpacer()
-            Foods()
-            Spacer(Modifier.height(veryHighPadding * 3))
+
+            uiState.error.isNotEmpty() -> ErrorScreen(
+                modifier = Modifier.fillMaxSize().padding(innerPadding), error = uiState.error
+            )
+
+            else -> Column(
+                modifier = Modifier.fillMaxSize().padding(innerPadding)
+                    .padding(mediumPadding)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                ThemeDateHeader(
+                    modifier = Modifier.fillMaxWidth().padding(start = smallPadding),
+                    title = "12 de febrero",
+                    onClick = { showSelectedDatePicker = true }
+                )
+                VerticalHigSpacer()
+                Foods(dayMenu = uiState.dayMenu)
+                Spacer(Modifier.height(veryHighPadding * 3))
+                if (showSelectedDatePicker)
+                    ThemeDialogDatePicker(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = smallPadding),
+                        state = datePickerState,
+                        onDismissRequest = { showSelectedDatePicker = false },
+                        onAcceptRequest = { viewModel.setDate(it) }
+                    )
+            }
         }
     }
 }
 
 
 @Composable
-fun Foods() {
-    ThemeCard {
+fun Foods(modifier: Modifier = Modifier, dayMenu: List<DayMenuModel>) {
+    ThemeCard(modifier = modifier) {
         ThemeIconHeader(
             imageVector = Icons.Default.ShoppingCart,
             title = stringResource(Res.string.comidasPlanificadas)

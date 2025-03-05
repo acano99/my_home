@@ -5,5 +5,6 @@ import org.acano99.my_home.data.models.DayMenuModel
 data class FoodHomeUiState(
     val loading: Boolean = true,
     val error: String = "",
-    val dayMenu: List<DayMenuModel> = listOf()
+    val dayMenu: List<DayMenuModel> = listOf(),
+    val date: String = ""
 )

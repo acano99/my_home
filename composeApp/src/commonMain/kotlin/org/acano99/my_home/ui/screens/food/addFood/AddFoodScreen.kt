@@ -9,13 +9,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.DisplayMode
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
@@ -34,6 +38,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.acano99.my_home.data.models.MenuType
 import org.acano99.my_home.data.models.dayMenu
@@ -41,6 +46,7 @@ import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeCard
 import org.acano99.my_home.ui.composables.ThemeElevatedButton
 import org.acano99.my_home.ui.composables.ThemeFoodIcon
+import org.acano99.my_home.ui.composables.ThemeIconHeader
 import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.theme.mediumPadding
@@ -54,6 +60,7 @@ fun AddFoodHome() {
         initialSelectedDateMillis = 1578096000000,
         initialDisplayMode = DisplayMode.Input
     )
+    val foodTypeList = listOf("Desayuno", "Almuerzo", "Comida", "Merienda")
 
     Scaffold(
         topBar = { ThemeTopBar("Agregar Comida") },
@@ -68,24 +75,9 @@ fun AddFoodHome() {
                 .padding(mediumPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-            DatePicker(
-                state = datePickerState, title = null,
-            )
+            SelectedDate(datePickerState)
             VerticalHigSpacer()
-            ThemeCard {
-                Text(text = "Tipo de Comida")
-                FlowRow {
-                    repeat(4) {
-                        FilterChip(selected = false, onClick = {}, label = {
-                            Text(text = "Desayuno")
-                        })
-                    }
-                }
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = "", onValueChange = {}, label = { Text("Comida") })
-                ThemeElevatedButton()
-            }
+            AddNewFood(foodTypeList)
             VerticalHigSpacer()
             dayMenu.map { menu ->
                 Row(
@@ -129,6 +121,7 @@ fun AddFoodHome() {
                     Spacer(Modifier.weight(1f))
                     IconButton(onClick = {}) {
                         Icon(
+                            modifier = Modifier.size(24.dp),
                             imageVector = Icons.Rounded.Delete,
                             contentDescription = "",
                         )
@@ -138,6 +131,37 @@ fun AddFoodHome() {
             ThemeElevatedButton()
             Spacer(Modifier.height(veryHighPadding * 3))
         }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AddNewFood(foodTypeList: List<String>) {
+    ThemeCard {
+        ThemeIconHeader(icon = Icons.Rounded.DateRange, title = "Agregue una comida")
+        VerticalHigSpacer()
+        Text(text = "Tipo de Comida")
+        FlowRow {
+            repeat(4) {
+                FilterChip(selected = false, onClick = {}, label = {
+                    Text(text = "Desayuno")
+                })
+            }
+        }
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = "", onValueChange = {}, label = { Text("Comida") })
+        ThemeElevatedButton()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SelectedDate(datePickerState: DatePickerState) {
+    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+        DatePicker(
+            state = datePickerState
+        )
     }
 }
 

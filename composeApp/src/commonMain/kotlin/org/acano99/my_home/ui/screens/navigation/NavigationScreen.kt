@@ -10,7 +10,7 @@ import org.acano99.my_home.ui.screens.food.foodHome.FoodHomeScreen
 @Composable
 fun NavigationScreen() {
     val navHostController = rememberNavController()
-    NavHost(navController = navHostController, startDestination = "addFood") {
+    NavHost(navController = navHostController, startDestination = "foodHome") {
         composable(route = "foodHome") {
             FoodHomeScreen(navController = navHostController)
         }

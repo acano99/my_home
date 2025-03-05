@@ -13,11 +13,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ThemeIconHeader(modifier: Modifier = Modifier, imageVector: ImageVector, title: String) {
+fun ThemeIconHeader(modifier: Modifier = Modifier, icon: ImageVector, title: String) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Icon(
             modifier = Modifier.size(28.dp),
-            imageVector = imageVector,
+            imageVector = icon,
             contentDescription = ""
         )
         HorizontalMinSpacer()

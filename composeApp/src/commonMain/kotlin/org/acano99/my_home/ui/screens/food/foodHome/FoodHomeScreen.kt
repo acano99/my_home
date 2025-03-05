@@ -127,7 +127,7 @@ fun FoodHomeScreen(
 fun Foods(modifier: Modifier = Modifier, dayMenu: List<DayMenuModel>) {
     ThemeCard(modifier = modifier) {
         ThemeIconHeader(
-            imageVector = Icons.Default.ShoppingCart,
+            icon = Icons.Default.ShoppingCart,
             title = stringResource(Res.string.comidasPlanificadas)
         )
         VerticalMinSpacer()
@@ -184,7 +184,7 @@ fun Pagos() {
     ThemeCard {
         Column(modifier = Modifier.padding(horizontal = smallPadding)) {
             ThemeIconHeader(
-                imageVector = Icons.Default.ShoppingCart,
+                icon = Icons.Default.ShoppingCart,
                 title = stringResource(Res.string.pagosPlanificados)
             )
             VerticalSmallSpacer()

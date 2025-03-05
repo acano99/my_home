@@ -23,7 +23,39 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun ThemeDateHeader(modifier: Modifier = Modifier, title: String) {
     val header = stringResource(Res.string.today)
-    ThemeCard {
+    ThemeCard() {
+        Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                modifier = Modifier.size(48.dp),
+                imageVector = Icons.Default.DateRange,
+                contentDescription = null
+            )
+            HorizontalVerySmallSpacer()
+            Text(text = buildAnnotatedString {
+                withStyle(style = ParagraphStyle(lineHeight = 34.sp)) {
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.W500)) {
+                        append(header)
+                    }
+                    append("\n")
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.W700,
+                            fontSize = 32.sp
+                        )
+                    ) {
+                        append(title)
+                    }
+                }
+
+            })
+        }
+    }
+}
+
+@Composable
+fun ThemeDateHeader(modifier: Modifier = Modifier, title: String, onClick: () -> Unit) {
+    val header = stringResource(Res.string.today)
+    ThemeCard(onClick = onClick) {
         Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 modifier = Modifier.size(48.dp),

@@ -20,11 +20,18 @@ class FoodHomeViewModel : ViewModel() {
         _uiState.update { state ->
             state.copy(loading = true)
         }
+
         viewModelScope.launch {
             runCatching {
                 GetFoodsUseCase().invoke()
             }.onSuccess { response ->
-                _uiState.update { state -> state.copy(loading = false, dayMenu = response) }
+                _uiState.update { state ->
+                    state.copy(
+                        loading = false,
+                        dayMenu = response,
+                        error = ""
+                    )
+                }
             }.onFailure { error ->
                 _uiState.update { state ->
                     state.copy(
@@ -34,5 +41,11 @@ class FoodHomeViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun setDate(dateInMilliseconds: Long) {
+        //TODO: Convertir la fecha de long a una fecha
+        val date = dateInMilliseconds
+        println(date)
     }
 }

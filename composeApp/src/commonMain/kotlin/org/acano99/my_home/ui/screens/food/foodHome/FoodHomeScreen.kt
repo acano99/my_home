@@ -1,8 +1,6 @@
 package org.acano99.my_home.ui.screens.food.foodHome
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +12,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -27,16 +24,13 @@ import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import myhome.composeapp.generated.resources.Res
 import myhome.composeapp.generated.resources.comidasPlanificadas
-import myhome.composeapp.generated.resources.comprasPlanificadas
 import myhome.composeapp.generated.resources.pagosPlanificados
 import org.acano99.my_home.data.models.MenuType
-import org.acano99.my_home.data.models.buyModel
 import org.acano99.my_home.data.models.dayMenu
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeBottomNavigationBar
@@ -141,43 +135,6 @@ fun Foods() {
             }
         } else {
             Text("No hay comidas planificadas")
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun BuyList() {
-    ThemeCard {
-        Column(modifier = Modifier.padding(horizontal = smallPadding)) {
-            ThemeIconHeader(
-                imageVector = Icons.Default.ShoppingCart,
-                title = stringResource(Res.string.comprasPlanificadas)
-            )
-            VerticalMinSpacer()
-
-            if (buyModel.items.isNotEmpty()) {
-                FlowRow(modifier = Modifier.fillMaxWidth()) {
-
-                    repeat(buyModel.items.size) { item ->
-                        ElevatedCard(modifier = Modifier.padding(minPadding)) {
-                            Text(
-                                text = buyModel.items[item].name,
-                                textDecoration = if (buyModel.items[item].comprado) TextDecoration.LineThrough else null,
-                                fontWeight = FontWeight.W500,
-                                fontSize = 18.sp,
-                                lineHeight = 24.sp,
-                                modifier = Modifier.padding(
-                                    vertical = minPadding,
-                                    horizontal = verySmallPadding
-                                )
-                            )
-                        }
-                    }
-                }
-            } else {
-                Text("No hay compras planificadas")
-            }
         }
     }
 }

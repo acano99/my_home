@@ -16,6 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.ShoppingCart
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.DisplayMode
@@ -25,6 +27,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,8 +48,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.acano99.my_home.data.models.DayMenuModel
 import org.acano99.my_home.data.models.MenuType
-import org.acano99.my_home.data.models.dayMenu
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeCard
 import org.acano99.my_home.ui.composables.ThemeElevatedButton
@@ -54,6 +57,7 @@ import org.acano99.my_home.ui.composables.ThemeFoodIcon
 import org.acano99.my_home.ui.composables.ThemeIconHeader
 import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
+import org.acano99.my_home.ui.composables.VerticalVeryHigSpacer
 import org.acano99.my_home.ui.theme.mediumPadding
 import org.acano99.my_home.ui.theme.smallPadding
 import org.acano99.my_home.ui.theme.veryHighPadding
@@ -70,14 +74,17 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
         initialSelectedDateMillis = 1578096000000,
         initialDisplayMode = DisplayMode.Input
     )
-    val foodTypeList = listOf("Desayuno", "Almuerzo", "Comida", "Merienda")
+    //val foodTypeList = listOf("Desayuno", "Almuerzo", "Comida", "Merienda")
+    val foodTypeList =
+        listOf(MenuType.Desayuno, MenuType.Merienda, MenuType.Almuerzo, MenuType.Comida)
 
     Scaffold(
         topBar = { ThemeTopBar("Agregar Comida") },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
+            FloatingActionButton(onClick = {}) {
+                Icon(imageVector = Icons.Rounded.ShoppingCart, contentDescription = null)
 
-            }) {}
+            }
         })
     { innerPadding ->
         Column(
@@ -92,57 +99,13 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
                     it
                 )
             })
-            VerticalHigSpacer()
-            dayMenu.map { menu ->
-                Row(
-                    modifier = Modifier.padding(bottom = verySmallPadding),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    when (menu.type) {
-                        MenuType.Desayuno -> ThemeFoodIcon(
-                            icon = Icons.Default.ShoppingCart,
-                            backgroundColor = Color.Yellow
-                        )
-
-                        MenuType.Merienda -> ThemeFoodIcon(
-                            icon = Icons.Default.ShoppingCart,
-                            backgroundColor = Color.Cyan
-                        )
-
-                        MenuType.Almuerzo -> ThemeFoodIcon(
-                            icon = Icons.Default.ShoppingCart,
-                            backgroundColor = Color.Red
-                        )
-
-                        MenuType.Comida -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
-                        null -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
-                    }
-                    HorizontalVerySmallSpacer()
-                    Text(text = buildAnnotatedString {
-                        withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontWeight = FontWeight.W500,
-                                    fontSize = 18.sp
-                                )
-                            ) {
-                                append("${menu.type}")
-                            }
-                            append("\n")
-                            append(menu.food)
-                        }
-                    })
-                    Spacer(Modifier.weight(1f))
-                    IconButton(onClick = {}) {
-                        Icon(
-                            modifier = Modifier.size(24.dp),
-                            imageVector = Icons.Rounded.Delete,
-                            contentDescription = "",
-                        )
-                    }
-                }
-            }
-            ThemeElevatedButton()
+            VerticalVeryHigSpacer()
+            FoodsList(dayMenu = uiState.dayMenu)
+            VerticalVeryHigSpacer()
+            ThemeElevatedButton(
+                text = "Eliminar planificacion",
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+            )
             Spacer(Modifier.height(veryHighPadding * 3))
         }
     }
@@ -150,7 +113,7 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun AddNewFood(foodTypeList: List<String>, menu: String, onMenuChange: (String) -> Unit) {
+private fun AddNewFood(foodTypeList: List<MenuType>, menu: String, onMenuChange: (String) -> Unit) {
     var foodSelected by remember { mutableIntStateOf(0) }
     ThemeCard {
         ThemeIconHeader(icon = Icons.Rounded.DateRange, title = "Agregue una comida")
@@ -161,7 +124,7 @@ private fun AddNewFood(foodTypeList: List<String>, menu: String, onMenuChange: (
                     selected = foodSelected == index,
                     onClick = { foodSelected = index },
                     label = {
-                        Text(text = foodTypeList[index])
+                        Text(text = foodTypeList[index].name)
                     }, modifier = Modifier.padding(end = smallPadding)
                 )
             }
@@ -171,7 +134,12 @@ private fun AddNewFood(foodTypeList: List<String>, menu: String, onMenuChange: (
             modifier = Modifier.fillMaxWidth(),
             value = menu, onValueChange = { onMenuChange(it) }, label = { Text("Menu") })
         VerticalHigSpacer()
-        ThemeElevatedButton()
+        ThemeElevatedButton(
+            text = "Agregar a la planificacion",
+            colors = ButtonDefaults.elevatedButtonColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
+        )
     }
 }
 
@@ -186,6 +154,57 @@ private fun SelectedDate(datePickerState: DatePickerState) {
 }
 
 @Composable
-fun Foods() {
+fun FoodsList(dayMenu: List<DayMenuModel>) {
+    dayMenu.map { menu ->
 
+        Row(
+            modifier = Modifier.padding(bottom = verySmallPadding),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            when (menu.type) {
+                MenuType.Desayuno -> ThemeFoodIcon(
+                    icon = Icons.Default.ShoppingCart,
+                    backgroundColor = Color.Yellow
+                )
+
+                MenuType.Merienda -> ThemeFoodIcon(
+                    icon = Icons.Default.ShoppingCart,
+                    backgroundColor = Color.Cyan
+                )
+
+                MenuType.Almuerzo -> ThemeFoodIcon(
+                    icon = Icons.Default.ShoppingCart,
+                    backgroundColor = Color.Red
+                )
+
+                MenuType.Comida -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
+                null -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
+            }
+            HorizontalVerySmallSpacer()
+            Text(
+                modifier = Modifier.weight(1f),
+                text = buildAnnotatedString {
+                    withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.W500,
+                                fontSize = 18.sp
+                            )
+                        ) {
+                            append("${menu.type}")
+                        }
+                        append("\n")
+                        append(menu.food)
+                    }
+                })
+            IconButton(onClick = {}) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = Icons.Rounded.Delete,
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.error
+                )
+            }
+        }
+    }
 }

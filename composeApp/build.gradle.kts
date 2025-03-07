@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
-    //alias(libs.plugins.androidx.room)
+    alias(libs.plugins.androidx.room)
 }
 
 kotlin {
@@ -46,8 +46,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.navigation.compose)
-            //implementation(libs.androidx.room.runtime)
-            //implementation(libs.androidx.sqlite.bundle)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundle)
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
@@ -84,11 +84,14 @@ android {
 }
 
 dependencies {
+    //implementation(libs.androidx.sqlite.bundled.android)
     debugImplementation(compose.uiTooling)
     //ksp(libs.androidx.room.compiler)
-    //add("kspCommonMainMetadata", libs.androidx.room.compiler)
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
 }
 
-//room{
-//    schemaDirectory("$projectDir/schemas")
-//}
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+

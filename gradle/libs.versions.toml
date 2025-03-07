@@ -15,11 +15,12 @@ compose-multiplatform = "1.7.0"
 junit = "4.13.2"
 kotlin = "2.1.0"
 navigation-compose = "2.8.0-alpha02"
-#androidx-room = "2.7.0-rc01"
-#androidx-sqliteBundle = "2.5.-alpha03"
+androidx-room = "2.7.0-rc01"
+androidx-sqliteBundle = "2.5.0-rc01"
 ksp = "2.0.0-1.0.21"
 koin = "3.6.0-Beta4"
 koin-compose = "1.2.0-Beta4"
+#sqliteBundledAndroid = "2.5.0-rc01"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -35,14 +36,15 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
-#androidx-room-runtime = {group="androidx.room", name = "room-runtime", version.ref = "androidx-room"}
-#androidx-room-compiler = {group="androidx.room", name = "room-compiler",  version.ref="androidx-room"}
-#androidx-sqlite-bundle = {group="androidx.sqlite", name = "sqlite", version.ref="androidx-sqliteBundle"}
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-sqlite-bundle = { group = "androidx.sqlite", name = "sqlite", version.ref = "androidx-sqliteBundle" }
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose" }
 koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin-compose" }
+#androidx-sqlite-bundled-android = { group = "androidx.sqlite", name = "sqlite-bundled-android", version.ref = "sqliteBundledAndroid" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -51,4 +53,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-mu
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-#androidx-room = { id = "androidx.room", version.ref = "androidx-room"}
+androidx-room = { id = "androidx.room", version.ref = "androidx-room" }

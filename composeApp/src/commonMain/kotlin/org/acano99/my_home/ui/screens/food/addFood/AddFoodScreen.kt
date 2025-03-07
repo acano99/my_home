@@ -30,6 +30,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -57,10 +58,14 @@ import org.acano99.my_home.ui.theme.mediumPadding
 import org.acano99.my_home.ui.theme.smallPadding
 import org.acano99.my_home.ui.theme.veryHighPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class, KoinExperimentalAPI::class)
 @Composable
-fun AddFoodHome() {
+fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
+    val uiState by viewModel.uiState.collectAsState()
+
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = 1578096000000,
         initialDisplayMode = DisplayMode.Input
@@ -82,7 +87,11 @@ fun AddFoodHome() {
         ) {
             SelectedDate(datePickerState)
             VerticalHigSpacer()
-            AddNewFood(foodTypeList)
+            AddNewFood(foodTypeList = foodTypeList, menu = uiState.menu, onMenuChange = {
+                viewModel.onMenuChange(
+                    it
+                )
+            })
             VerticalHigSpacer()
             dayMenu.map { menu ->
                 Row(
@@ -141,7 +150,7 @@ fun AddFoodHome() {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun AddNewFood(foodTypeList: List<String>) {
+private fun AddNewFood(foodTypeList: List<String>, menu: String, onMenuChange: (String) -> Unit) {
     var foodSelected by remember { mutableIntStateOf(0) }
     ThemeCard {
         ThemeIconHeader(icon = Icons.Rounded.DateRange, title = "Agregue una comida")
@@ -160,7 +169,7 @@ private fun AddNewFood(foodTypeList: List<String>) {
         VerticalHigSpacer()
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = "", onValueChange = {}, label = { Text("Menu") })
+            value = menu, onValueChange = { onMenuChange(it) }, label = { Text("Menu") })
         VerticalHigSpacer()
         ThemeElevatedButton()
     }

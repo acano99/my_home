@@ -49,7 +49,7 @@ import org.acano99.my_home.ui.composables.ThemeIconHeader
 import org.acano99.my_home.ui.composables.ThemeInvoice
 import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
-import org.acano99.my_home.ui.composables.VerticalMinSpacer
+import org.acano99.my_home.ui.composables.VerticalMediumSpacer
 import org.acano99.my_home.ui.composables.VerticalSmallSpacer
 import org.acano99.my_home.ui.screens.common.ErrorScreen
 import org.acano99.my_home.ui.screens.common.LoadingScreen
@@ -130,7 +130,7 @@ fun Foods(modifier: Modifier = Modifier, dayMenu: List<DayMenuModel>) {
             icon = Icons.Default.ShoppingCart,
             title = stringResource(Res.string.comidasPlanificadas)
         )
-        VerticalMinSpacer()
+        VerticalMediumSpacer()
         if (dayMenu.isNotEmpty()) {
             dayMenu.map { menu ->
                 Row(

@@ -30,6 +30,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,6 +54,7 @@ import org.acano99.my_home.ui.composables.ThemeIconHeader
 import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.theme.mediumPadding
+import org.acano99.my_home.ui.theme.smallPadding
 import org.acano99.my_home.ui.theme.veryHighPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
 
@@ -137,20 +142,26 @@ fun AddFoodHome() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AddNewFood(foodTypeList: List<String>) {
+    var foodSelected by remember { mutableIntStateOf(0) }
     ThemeCard {
         ThemeIconHeader(icon = Icons.Rounded.DateRange, title = "Agregue una comida")
         VerticalHigSpacer()
-        Text(text = "Tipo de Comida")
         FlowRow {
-            repeat(4) {
-                FilterChip(selected = false, onClick = {}, label = {
-                    Text(text = "Desayuno")
-                })
+            repeat(foodTypeList.size) { index ->
+                FilterChip(
+                    selected = foodSelected == index,
+                    onClick = { foodSelected = index },
+                    label = {
+                        Text(text = foodTypeList[index])
+                    }, modifier = Modifier.padding(end = smallPadding)
+                )
             }
         }
+        VerticalHigSpacer()
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = "", onValueChange = {}, label = { Text("Comida") })
+            value = "", onValueChange = {}, label = { Text("Menu") })
+        VerticalHigSpacer()
         ThemeElevatedButton()
     }
 }

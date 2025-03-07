@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.acano99.my_home.domain.usecases.GetFoodsUseCase
 
-class FoodHomeViewModel : ViewModel() {
+class FoodHomeViewModel() : ViewModel() {
     private val _uiState = MutableStateFlow<FoodHomeUiState>(FoodHomeUiState())
     var uiState: StateFlow<FoodHomeUiState> = _uiState
 

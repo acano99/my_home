@@ -1,5 +1,8 @@
 package org.acano99.my_home.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 enum class MenuType {
     Desayuno, Merienda, Almuerzo, Comida
 }
@@ -8,8 +11,9 @@ enum class WeekDay {
     Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo
 }
 
+@Entity
 data class DayMenuModel(
-    val id: Int? = null,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val type: MenuType? = null,
     val food: String = "",
     val weekDay: WeekDay? = null,

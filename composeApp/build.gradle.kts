@@ -54,6 +54,9 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
         }
     }
+    sourceSets.commonMain {
+        kotlin.srcDirs("build/generated/ksp/metadata")
+    }
 }
 
 android {
@@ -84,14 +87,14 @@ android {
 }
 
 dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+
     //implementation(libs.androidx.sqlite.bundled.android)
     debugImplementation(compose.uiTooling)
-    //ksp(libs.androidx.room.compiler)
-    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+    //add("kspCommonMainMetadata", libs.androidx.room.compiler)
 }
 
 room {
     schemaDirectory("$projectDir/schemas")
 }
-
-

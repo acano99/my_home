@@ -14,7 +14,13 @@ import org.acano99.my_home.data.database.entity.FoodsWithMenuDay
 interface DayMenuDao {
     @Transaction
     @Query("SELECT * From DayMenu")
-    fun getDayMenus(): Flow<List<FoodsWithMenuDay>>
+    fun getDayMenus(): List<FoodsWithMenuDay>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDayMenu(dayMenuEntity: DayMenuEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFood(foodEntity: FoodEntity)
 
     /*@Query("SELECT * From Food WHERE id = :id")
     fun getDayMenuById(id: Int): Flow<FoodEntity>

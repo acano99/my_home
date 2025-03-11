@@ -109,6 +109,8 @@ fun FoodHomeScreen(
                 )
                 VerticalHigSpacer()
                 Foods(dayMenu = uiState.dayMenu)
+                VerticalHigSpacer()
+                Text(uiState.testdata, fontSize = 24.sp)
                 Spacer(Modifier.height(veryHighPadding * 3))
                 if (showSelectedDatePicker)
                     ThemeDialogDatePicker(

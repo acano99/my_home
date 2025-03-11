@@ -6,5 +6,6 @@ data class FoodHomeUiState(
     val loading: Boolean = true,
     val error: String = "",
     val dayMenu: List<DayMenuModel> = listOf(),
+    val testdata: String = "",
     val date: String = ""
 )

@@ -17,7 +17,7 @@ data class DayMenuEntity(
 
 @Entity(tableName = "Food")
 data class FoodEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     @ColumnInfo(name = "menu_day_id_parent") val dayMenuIdParent: Int,
     @ColumnInfo(name = "food") val food: String,
     @ColumnInfo(name = "menu_type") val menuType: MenuType

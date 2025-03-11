@@ -12,7 +12,7 @@ data class DayMenu(
 )
 
 data class Food(
-    val id: Int,
+    val id: Int? = null,
     val dayMenuIdParent: Int,
     val food: String,
     val menuType: MenuType

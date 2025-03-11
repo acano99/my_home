@@ -11,8 +11,12 @@ import kotlinx.coroutines.launch
 import org.acano99.my_home.domain.model.DayMenu
 import org.acano99.my_home.domain.model.Food
 import org.acano99.my_home.domain.usecases.InsertDayMenuUseCase
+import org.acano99.my_home.domain.usecases.InsertFoodUseCase
 
-class AddFoodViewModel(private val insertDayMenu: InsertDayMenuUseCase) : ViewModel() {
+class AddFoodViewModel(
+    private val insertDayMenu: InsertDayMenuUseCase,
+    private val insertFoodUseCase: InsertFoodUseCase
+) : ViewModel() {
     private val _uiState = MutableStateFlow(AddFoodUiState())
     var uiState: StateFlow<AddFoodUiState> = _uiState
 
@@ -31,11 +35,20 @@ class AddFoodViewModel(private val insertDayMenu: InsertDayMenuUseCase) : ViewMo
         }
     }
 
-    fun save(dayMenu: DayMenu){
-        viewModelScope.launch (Dispatchers.IO){
+    fun save(dayMenu: DayMenu) {
+        viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 insertDayMenu.invoke(dayMenu)
-            }.onFailure {  }.onSuccess {  }.onFailure {  }
+            }.onFailure {
+                // Cambiar a estado de error
+            }.onSuccess {
+                // TODO:Obtener el id del dayMenu para asignarselo a cada food en la lista
+                _uiState.value.foods.forEach {
+                    insertFoodUseCase.invoke(food = it)
+                }
+            }.onFailure {
+                // Eliminar todos los registros insertados hasta el momento
+            }
         }
     }
 }

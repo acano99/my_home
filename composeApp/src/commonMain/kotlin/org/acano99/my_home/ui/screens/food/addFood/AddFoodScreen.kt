@@ -92,8 +92,7 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
         }, onMenuTypeSelected = { foodType = it }) {
             viewModel.temporalAdd(
                 food = Food(
-                    id = 0,
-                    dayMenuIdParent = 0,
+                    dayMenuIdParent = 1,
                     food = uiState.menu,
                     menuType = foodType
                 )

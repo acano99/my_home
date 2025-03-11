@@ -18,11 +18,9 @@ class DayMenuRepository(private val dayMenuDao: DayMenuDao) : IDayMenuRepository
         dayMenuDao.getDayMenuByDate(date = date).toDomain()
 
 
-    override suspend fun insertDayMenu(dayMenu: DayMenu) {
+    override suspend fun insertDayMenu(dayMenu: DayMenu) =
         dayMenuDao.insertDayMenu(dayMenuEntity = dayMenu.toEntity())
-    }
 
-    override suspend fun insertFood(food: Food) {
-        TODO("Not yet implemented")
-    }
+
+    override suspend fun insertFood(food: Food) = dayMenuDao.insertFood(food.toEntity())
 }

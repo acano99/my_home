@@ -17,10 +17,13 @@ import org.acano99.my_home.ui.theme.verySmallPadding
 fun ThemeElevatedButton(
     modifier: Modifier = Modifier.fillMaxWidth().padding(
         minPadding
-    ), colors: ButtonColors = ButtonDefaults.elevatedButtonColors(), text: String
+    ),
+    colors: ButtonColors = ButtonDefaults.elevatedButtonColors(),
+    text: String,
+    onClick: () -> Unit = {}
 ) {
     ElevatedButton(
-        onClick = {},
+        onClick = { onClick() },
         shape = RoundedCornerShape(verySmallPadding),
         modifier = modifier,
         colors = colors

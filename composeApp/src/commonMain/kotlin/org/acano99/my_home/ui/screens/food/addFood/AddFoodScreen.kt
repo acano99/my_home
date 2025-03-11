@@ -1,17 +1,13 @@
 package org.acano99.my_home.ui.screens.food.addFood
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.rounded.DateRange
@@ -29,7 +25,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -49,23 +44,22 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.acano99.my_home.data.enums.MenuType
-import org.acano99.my_home.domain.model.DayMenu
+import org.acano99.my_home.domain.model.Food
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeCard
 import org.acano99.my_home.ui.composables.ThemeElevatedButton
 import org.acano99.my_home.ui.composables.ThemeFoodIcon
 import org.acano99.my_home.ui.composables.ThemeIconHeader
-import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.composables.VerticalVeryHigSpacer
-import org.acano99.my_home.ui.theme.mediumPadding
+import org.acano99.my_home.ui.screens.common.CommonScreen
 import org.acano99.my_home.ui.theme.smallPadding
 import org.acano99.my_home.ui.theme.veryHighPadding
 import org.acano99.my_home.ui.theme.verySmallPadding
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class, KoinExperimentalAPI::class)
+@OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
@@ -74,46 +68,51 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
         initialSelectedDateMillis = 1578096000000,
         initialDisplayMode = DisplayMode.Input
     )
-    //val foodTypeList = listOf("Desayuno", "Almuerzo", "Comida", "Merienda")
+
     val foodTypeList =
         listOf(MenuType.Desayuno, MenuType.Merienda, MenuType.Almuerzo, MenuType.Comida)
 
-    Scaffold(
-        topBar = { ThemeTopBar("Agregar Comida") },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
-                Icon(imageVector = Icons.Rounded.ShoppingCart, contentDescription = null)
+    CommonScreen(title = "Agregar Comida", fab = {
+        FloatingActionButton(onClick = {}) {
+            Icon(imageVector = Icons.Rounded.ShoppingCart, contentDescription = null)
 
-            }
-        })
-    { innerPadding ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(innerPadding)
-                .padding(mediumPadding)
-                .verticalScroll(rememberScrollState())
-        ) {
-            SelectedDate(datePickerState)
-            VerticalHigSpacer()
-            AddNewFood(foodTypeList = foodTypeList, menu = uiState.menu, onMenuChange = {
-                viewModel.onMenuChange(
-                    it
-                )
-            })
-            VerticalVeryHigSpacer()
-            //FoodsList()
-            VerticalVeryHigSpacer()
-            ThemeElevatedButton(
-                text = "Eliminar planificacion",
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = MaterialTheme.colorScheme.errorContainer)
-            )
-            Spacer(Modifier.height(veryHighPadding * 3))
         }
+    }) {
+        SelectedDate(datePickerState)
+        VerticalHigSpacer()
+        AddNewFood(foodTypeList = foodTypeList, menu = uiState.menu, onMenuChange = {
+            viewModel.onMenuChange(
+                it
+            )
+        }) {
+            viewModel.temporalAdd(
+                food = Food(
+                    id = 0,
+                    dayMenuIdParent = 0,
+                    food = uiState.menu,
+                    menuType = MenuType.Comida
+                )
+            )
+        }
+        VerticalHigSpacer()
+        FoodsList(foods = uiState.foods)
+        VerticalVeryHigSpacer()
+        ThemeElevatedButton(
+            text = "Eliminar planificacion",
+            colors = ButtonDefaults.elevatedButtonColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+        )
+        Spacer(Modifier.height(veryHighPadding * 2))
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun AddNewFood(foodTypeList: List<MenuType>, menu: String, onMenuChange: (String) -> Unit) {
+private fun AddNewFood(
+    foodTypeList: List<MenuType>,
+    menu: String,
+    onMenuChange: (String) -> Unit,
+    addFood: () -> Unit
+) {
     var foodSelected by remember { mutableIntStateOf(0) }
     ThemeCard {
         ThemeIconHeader(icon = Icons.Rounded.DateRange, title = "Agregue una comida")
@@ -138,8 +137,10 @@ private fun AddNewFood(foodTypeList: List<MenuType>, menu: String, onMenuChange:
             text = "Agregar a la planificacion",
             colors = ButtonDefaults.elevatedButtonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer
-            )
-        )
+            ),
+        ) {
+            addFood()
+        }
     }
 }
 
@@ -154,14 +155,14 @@ private fun SelectedDate(datePickerState: DatePickerState) {
 }
 
 @Composable
-fun FoodsList(dayMenu: List<DayMenu>) {
-    dayMenu.map { menu ->
+fun FoodsList(foods: List<Food>) {
+    foods.map { food ->
 
         Row(
             modifier = Modifier.padding(bottom = verySmallPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            /*when (menu.type) {
+            when (food.menuType) {
                 MenuType.Desayuno -> ThemeFoodIcon(
                     icon = Icons.Default.ShoppingCart,
                     backgroundColor = Color.Yellow
@@ -178,8 +179,7 @@ fun FoodsList(dayMenu: List<DayMenu>) {
                 )
 
                 MenuType.Comida -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
-                null -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
-            }*/
+            }
             HorizontalVerySmallSpacer()
             Text(
                 modifier = Modifier.weight(1f),
@@ -191,10 +191,10 @@ fun FoodsList(dayMenu: List<DayMenu>) {
                                 fontSize = 18.sp
                             )
                         ) {
-                            //append("${menu.type}")
+                            append("${food.menuType}")
                         }
                         append("\n")
-                        //append(menu.food)
+                        append(food.food)
                     }
                 })
             IconButton(onClick = {}) {

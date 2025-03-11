@@ -7,7 +7,7 @@ import org.acano99.my_home.data.enums.MenuType
 
 
 data class DayMenu(
-    val dayMenuId: Int?,
+    val dayMenuId: Int? = null,
     val date: String?
 )
 

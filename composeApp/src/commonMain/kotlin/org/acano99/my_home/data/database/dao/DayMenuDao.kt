@@ -24,10 +24,4 @@ interface DayMenuDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFood(foodEntity: FoodEntity)
-
-    /*@Query("SELECT * From Food WHERE id = :id")
-    fun getDayMenuById(id: Int): Flow<FoodEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun newDayMenu(dayMenu: DayMenuEntity)*/
 }

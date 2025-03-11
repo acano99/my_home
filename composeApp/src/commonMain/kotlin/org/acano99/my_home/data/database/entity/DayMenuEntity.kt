@@ -11,7 +11,7 @@ import org.acano99.my_home.domain.model.Food
 
 @Entity(tableName = "DayMenu")
 data class DayMenuEntity(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "menu_day_id") val dayMenuId: Int?,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "menu_day_id") val dayMenuId: Int? = null,
     @ColumnInfo(name = "date") val date: String?
 )
 
@@ -38,6 +38,6 @@ data class FoodsWithDayMenuRelation(
 
 fun DayMenu.toEntity() = DayMenuEntity(dayMenuId = dayMenuId, date = date)
 
-fun Food.toDomain() =
+fun Food.toEntity() =
     FoodEntity(id = id, dayMenuIdParent = dayMenuIdParent, food = food, menuType = menuType)
 

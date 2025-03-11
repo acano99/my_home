@@ -5,5 +5,5 @@ import org.acano99.my_home.domain.model.Food
 
 data class AddFoodUiState(
     val menu: String = "",
-    val foods: MutableList<Food> = mutableListOf()
+    val foods: List<Food> = listOf()
 )

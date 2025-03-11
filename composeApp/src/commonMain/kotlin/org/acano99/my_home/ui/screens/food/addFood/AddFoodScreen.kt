@@ -44,6 +44,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.acano99.my_home.data.enums.MenuType
+import org.acano99.my_home.domain.model.DayMenu
 import org.acano99.my_home.domain.model.Food
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeCard
@@ -69,11 +70,15 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
         initialDisplayMode = DisplayMode.Input
     )
 
+    var foodType = MenuType.Desayuno
+
     val foodTypeList =
         listOf(MenuType.Desayuno, MenuType.Merienda, MenuType.Almuerzo, MenuType.Comida)
 
     CommonScreen(title = "Agregar Comida", fab = {
-        FloatingActionButton(onClick = {}) {
+        FloatingActionButton(onClick = {
+            viewModel.save(dayMenu = DayMenu(date = "12/12/12"))
+        }) {
             Icon(imageVector = Icons.Rounded.ShoppingCart, contentDescription = null)
 
         }
@@ -84,18 +89,19 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
             viewModel.onMenuChange(
                 it
             )
-        }) {
+        }, onMenuTypeSelected = { foodType = it }) {
             viewModel.temporalAdd(
                 food = Food(
                     id = 0,
                     dayMenuIdParent = 0,
                     food = uiState.menu,
-                    menuType = MenuType.Comida
+                    menuType = foodType
                 )
             )
         }
         VerticalHigSpacer()
-        FoodsList(foods = uiState.foods)
+        if (uiState.foods.isNotEmpty())
+            FoodsList(foods = uiState.foods)
         VerticalVeryHigSpacer()
         ThemeElevatedButton(
             text = "Eliminar planificacion",
@@ -111,6 +117,7 @@ private fun AddNewFood(
     foodTypeList: List<MenuType>,
     menu: String,
     onMenuChange: (String) -> Unit,
+    onMenuTypeSelected: (MenuType) -> Unit,
     addFood: () -> Unit
 ) {
     var foodSelected by remember { mutableIntStateOf(0) }
@@ -121,7 +128,10 @@ private fun AddNewFood(
             repeat(foodTypeList.size) { index ->
                 FilterChip(
                     selected = foodSelected == index,
-                    onClick = { foodSelected = index },
+                    onClick = {
+                        foodSelected = index
+                        onMenuTypeSelected(foodTypeList[foodSelected])
+                    },
                     label = {
                         Text(text = foodTypeList[index].name)
                     }, modifier = Modifier.padding(end = smallPadding)
@@ -157,7 +167,6 @@ private fun SelectedDate(datePickerState: DatePickerState) {
 @Composable
 fun FoodsList(foods: List<Food>) {
     foods.map { food ->
-
         Row(
             modifier = Modifier.padding(bottom = verySmallPadding),
             verticalAlignment = Alignment.CenterVertically

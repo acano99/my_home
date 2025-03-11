@@ -5,8 +5,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Relation
-import org.acano99.my_home.domain.model.DayMenu
-import org.acano99.my_home.domain.model.Food
 
 enum class MenuType {
     Desayuno, Merienda, Almuerzo, Comida
@@ -31,7 +29,7 @@ data class FoodEntity(
  * Cuando se hace una peticion para obtener el menu del dia con
  * todas las comidas se debe devolver esta entidad
 **/
-data class FoodsWithMenuDay(
+data class FoodsWithDayMenu(
     @Embedded val menu: DayMenuEntity,
     @Relation(
         parentColumn = "menu_day_id",

@@ -5,10 +5,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Relation
-
-enum class MenuType {
-    Desayuno, Merienda, Almuerzo, Comida
-}
+import org.acano99.my_home.data.enums.MenuType
+import org.acano99.my_home.domain.model.DayMenu
+import org.acano99.my_home.domain.model.Food
 
 @Entity(tableName = "DayMenu")
 data class DayMenuEntity(
@@ -28,12 +27,17 @@ data class FoodEntity(
  * Esta entidad represenra la relacion entre ambas tablas
  * Cuando se hace una peticion para obtener el menu del dia con
  * todas las comidas se debe devolver esta entidad
-**/
-data class FoodsWithDayMenu(
+ **/
+data class FoodsWithDayMenuRelation(
     @Embedded val menu: DayMenuEntity,
     @Relation(
         parentColumn = "menu_day_id",
         entityColumn = "menu_day_id_parent"
-    ) val foods:List<FoodEntity>
+    ) val foods: List<FoodEntity>
 )
+
+fun DayMenu.toEntity() = DayMenuEntity(dayMenuId = dayMenuId, date = date)
+
+fun Food.toDomain() =
+    FoodEntity(id = id, dayMenuIdParent = dayMenuIdParent, food = food, menuType = menuType)
 

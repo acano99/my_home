@@ -5,7 +5,6 @@ import androidx.room.RoomDatabase
 import org.acano99.my_home.data.database.dao.DayMenuDao
 import org.acano99.my_home.data.database.entity.DayMenuEntity
 import org.acano99.my_home.data.database.entity.FoodEntity
-import org.acano99.my_home.data.models.DayMenuModel
 
 const val DATABASE_NAME = "myHome.db"
 

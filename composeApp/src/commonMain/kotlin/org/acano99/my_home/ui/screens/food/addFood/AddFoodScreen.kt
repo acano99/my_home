@@ -48,8 +48,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.acano99.my_home.data.models.DayMenuModel
-import org.acano99.my_home.data.models.MenuType
+import org.acano99.my_home.data.enums.MenuType
+import org.acano99.my_home.domain.model.DayMenu
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeCard
 import org.acano99.my_home.ui.composables.ThemeElevatedButton
@@ -100,7 +100,7 @@ fun AddFoodHome(viewModel: AddFoodViewModel = koinViewModel()) {
                 )
             })
             VerticalVeryHigSpacer()
-            FoodsList(dayMenu = uiState.dayMenu)
+            //FoodsList()
             VerticalVeryHigSpacer()
             ThemeElevatedButton(
                 text = "Eliminar planificacion",
@@ -154,14 +154,14 @@ private fun SelectedDate(datePickerState: DatePickerState) {
 }
 
 @Composable
-fun FoodsList(dayMenu: List<DayMenuModel>) {
+fun FoodsList(dayMenu: List<DayMenu>) {
     dayMenu.map { menu ->
 
         Row(
             modifier = Modifier.padding(bottom = verySmallPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            when (menu.type) {
+            /*when (menu.type) {
                 MenuType.Desayuno -> ThemeFoodIcon(
                     icon = Icons.Default.ShoppingCart,
                     backgroundColor = Color.Yellow
@@ -179,7 +179,7 @@ fun FoodsList(dayMenu: List<DayMenuModel>) {
 
                 MenuType.Comida -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
                 null -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
-            }
+            }*/
             HorizontalVerySmallSpacer()
             Text(
                 modifier = Modifier.weight(1f),
@@ -191,10 +191,10 @@ fun FoodsList(dayMenu: List<DayMenuModel>) {
                                 fontSize = 18.sp
                             )
                         ) {
-                            append("${menu.type}")
+                            //append("${menu.type}")
                         }
                         append("\n")
-                        append(menu.food)
+                        //append(menu.food)
                     }
                 })
             IconButton(onClick = {}) {

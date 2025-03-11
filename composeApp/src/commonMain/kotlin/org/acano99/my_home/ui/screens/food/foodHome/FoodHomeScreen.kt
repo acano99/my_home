@@ -37,8 +37,6 @@ import androidx.navigation.NavController
 import myhome.composeapp.generated.resources.Res
 import myhome.composeapp.generated.resources.comidasPlanificadas
 import myhome.composeapp.generated.resources.pagosPlanificados
-import org.acano99.my_home.data.models.DayMenuModel
-import org.acano99.my_home.data.models.MenuType
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeBottomNavigationBar
 import org.acano99.my_home.ui.composables.ThemeCard
@@ -108,7 +106,7 @@ fun FoodHomeScreen(
                     onClick = { showSelectedDatePicker = true }
                 )
                 VerticalHigSpacer()
-                Foods(dayMenu = uiState.dayMenu)
+                //Foods(dayMenu = uiState.dayMenu)
                 VerticalHigSpacer()
                 Text(uiState.testdata, fontSize = 24.sp)
                 Spacer(Modifier.height(veryHighPadding * 3))
@@ -126,14 +124,14 @@ fun FoodHomeScreen(
 
 
 @Composable
-fun Foods(modifier: Modifier = Modifier, dayMenu: List<DayMenuModel>) {
+fun Foods(modifier: Modifier = Modifier) {
     ThemeCard(modifier = modifier) {
         ThemeIconHeader(
             icon = Icons.Default.ShoppingCart,
             title = stringResource(Res.string.comidasPlanificadas)
         )
         VerticalMediumSpacer()
-        if (dayMenu.isNotEmpty()) {
+        /*if (dayMenu.isNotEmpty()) {
             dayMenu.map { menu ->
                 Row(
                     modifier = Modifier.padding(bottom = verySmallPadding),
@@ -177,7 +175,7 @@ fun Foods(modifier: Modifier = Modifier, dayMenu: List<DayMenuModel>) {
             }
         } else {
             Text("No hay comidas planificadas")
-        }
+        }*/
     }
 }
 

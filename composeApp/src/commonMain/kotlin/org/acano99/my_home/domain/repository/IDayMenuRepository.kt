@@ -1,12 +1,12 @@
 package org.acano99.my_home.domain.repository
 
-import org.acano99.my_home.data.database.entity.DayMenuEntity
-import org.acano99.my_home.data.database.entity.FoodsWithDayMenu
+import org.acano99.my_home.domain.model.DayMenu
+import org.acano99.my_home.domain.model.FoodsWithDayMenu
 
 interface IDayMenuRepository {
     suspend fun getDayMenus():List<FoodsWithDayMenu>
 
     suspend fun getDayMenuByDate(date:String):FoodsWithDayMenu
 
-    suspend fun insertDayMenu(dayMenuEntity: DayMenuEntity)
+    suspend fun insertDayMenu(dayMenu: DayMenu)
 }

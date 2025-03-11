@@ -7,13 +7,13 @@ import androidx.room.Query
 import androidx.room.Transaction
 import org.acano99.my_home.data.database.entity.DayMenuEntity
 import org.acano99.my_home.data.database.entity.FoodEntity
-import org.acano99.my_home.data.database.entity.FoodsWithDayMenu
+import org.acano99.my_home.data.database.entity.FoodsWithDayMenuRelation
 
 @Dao
 interface DayMenuDao {
     @Transaction
     @Query("SELECT * From DayMenu")
-    fun getDayMenus(): List<FoodsWithDayMenu>
+    fun getDayMenus(): List<FoodsWithDayMenuRelation>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDayMenu(dayMenuEntity: DayMenuEntity)

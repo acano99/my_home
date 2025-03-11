@@ -15,6 +15,10 @@ interface DayMenuDao {
     @Query("SELECT * From DayMenu")
     fun getDayMenus(): List<FoodsWithDayMenuRelation>
 
+    @Transaction
+    @Query("SELECT * From DayMenu WHERE date=:date")
+    fun getDayMenuByDate(date:String): FoodsWithDayMenuRelation
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDayMenu(dayMenuEntity: DayMenuEntity)
 

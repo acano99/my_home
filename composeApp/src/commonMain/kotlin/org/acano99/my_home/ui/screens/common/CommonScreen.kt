@@ -14,11 +14,14 @@ import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.theme.mediumPadding
 
 @Composable
-fun CommonScreen(content: @Composable ColumnScope.() -> Unit) {
+fun CommonScreen(
+    title: String,
+    fab:@Composable ()->Unit ,
+    content: @Composable ColumnScope.() -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { ThemeTopBar(title = "Comidas") },
-        floatingActionButton = {},
+        topBar = { ThemeTopBar(title = title) },
+        floatingActionButton = fab,
         bottomBar = { ThemeBottomNavigationBar() }
     ) { innerPadding ->
         Column(

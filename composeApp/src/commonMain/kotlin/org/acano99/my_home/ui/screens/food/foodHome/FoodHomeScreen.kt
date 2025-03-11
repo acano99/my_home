@@ -37,6 +37,8 @@ import androidx.navigation.NavController
 import myhome.composeapp.generated.resources.Res
 import myhome.composeapp.generated.resources.comidasPlanificadas
 import myhome.composeapp.generated.resources.pagosPlanificados
+import org.acano99.my_home.data.enums.MenuType
+import org.acano99.my_home.domain.model.FoodsWithDayMenu
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
 import org.acano99.my_home.ui.composables.ThemeBottomNavigationBar
 import org.acano99.my_home.ui.composables.ThemeCard
@@ -106,9 +108,7 @@ fun FoodHomeScreen(
                     onClick = { showSelectedDatePicker = true }
                 )
                 VerticalHigSpacer()
-                //Foods(dayMenu = uiState.dayMenu)
-                VerticalHigSpacer()
-                Text(uiState.testdata, fontSize = 24.sp)
+                Foods(dayMenu = uiState.dayMenu)
                 Spacer(Modifier.height(veryHighPadding * 3))
                 if (showSelectedDatePicker)
                     ThemeDialogDatePicker(
@@ -124,20 +124,20 @@ fun FoodHomeScreen(
 
 
 @Composable
-fun Foods(modifier: Modifier = Modifier) {
+fun Foods(modifier: Modifier = Modifier, dayMenu: FoodsWithDayMenu?) {
     ThemeCard(modifier = modifier) {
         ThemeIconHeader(
             icon = Icons.Default.ShoppingCart,
             title = stringResource(Res.string.comidasPlanificadas)
         )
         VerticalMediumSpacer()
-        /*if (dayMenu.isNotEmpty()) {
-            dayMenu.map { menu ->
+        if (dayMenu != null) {
+            dayMenu.foods.map { food ->
                 Row(
                     modifier = Modifier.padding(bottom = verySmallPadding),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    when (menu.type) {
+                    when (food.menuType) {
                         MenuType.Desayuno -> ThemeFoodIcon(
                             icon = Icons.Default.ShoppingCart,
                             backgroundColor = Color.Yellow
@@ -154,8 +154,8 @@ fun Foods(modifier: Modifier = Modifier) {
                         )
 
                         MenuType.Comida -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
-                        null -> ThemeFoodIcon(icon = Icons.Default.ShoppingCart)
                     }
+
                     HorizontalVerySmallSpacer()
                     Text(text = buildAnnotatedString {
                         withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
@@ -165,17 +165,17 @@ fun Foods(modifier: Modifier = Modifier) {
                                     fontSize = 18.sp
                                 )
                             ) {
-                                append("${menu.type}")
+                                append("${food.menuType}")
                             }
                             append("\n")
-                            append(menu.food)
+                            append(food.food)
                         }
                     })
                 }
             }
         } else {
             Text("No hay comidas planificadas")
-        }*/
+        }
     }
 }
 

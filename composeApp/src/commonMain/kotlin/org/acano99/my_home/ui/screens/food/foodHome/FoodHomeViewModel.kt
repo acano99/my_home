@@ -28,7 +28,6 @@ class FoodHomeViewModel(
             runCatching {
                 getDayMenuByDateUseCase.invoke("12/12/12")
             }.onSuccess { response ->
-
                 _uiState.update { state ->
                     state.copy(
                         loading = false,

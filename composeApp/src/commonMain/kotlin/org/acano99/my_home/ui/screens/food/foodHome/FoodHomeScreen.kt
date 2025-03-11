@@ -51,6 +51,7 @@ import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.composables.VerticalMediumSpacer
 import org.acano99.my_home.ui.composables.VerticalSmallSpacer
+import org.acano99.my_home.ui.screens.common.CommonScreen
 import org.acano99.my_home.ui.screens.common.ErrorScreen
 import org.acano99.my_home.ui.screens.common.LoadingScreen
 import org.acano99.my_home.ui.theme.mediumPadding
@@ -74,10 +75,8 @@ fun FoodHomeScreen(
     )
     var showSelectedDatePicker by remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = { ThemeTopBar(title = "Comidas") },
-        floatingActionButton = {
+    CommonScreen (
+        fab = {
             FloatingActionButton(onClick = {
                 navController.let {
                     navController?.navigate("addFood")
@@ -86,22 +85,18 @@ fun FoodHomeScreen(
                 Icon(imageVector = Icons.Default.AddCircle, contentDescription = "")
             }
         },
-        bottomBar = { ThemeBottomNavigationBar() }
-    ) { innerPadding ->
+        title = "Comidas",
+    ){
         when {
             uiState.loading -> LoadingScreen(
-                modifier = Modifier.fillMaxSize().padding(innerPadding)
+                modifier = Modifier.fillMaxSize()
             )
 
             uiState.error.isNotEmpty() -> ErrorScreen(
-                modifier = Modifier.fillMaxSize().padding(innerPadding), error = uiState.error
+                modifier = Modifier.fillMaxSize(), error = uiState.error
             )
 
-            else -> Column(
-                modifier = Modifier.fillMaxSize().padding(innerPadding)
-                    .padding(mediumPadding)
-                    .verticalScroll(rememberScrollState())
-            ) {
+            else -> {
                 ThemeDateHeader(
                     modifier = Modifier.fillMaxWidth().padding(start = smallPadding),
                     title = "12 de febrero",

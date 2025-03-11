@@ -24,7 +24,7 @@ fun BuildListHomeScreen(navController: NavController? = null) {
     )
     var showSelectedDatePicker by remember { mutableStateOf(false) }
 
-    CommonScreen {
+    CommonScreen(fab = {}, title = "") {
         ThemeDateHeader(
             modifier = Modifier.fillMaxWidth().padding(start = smallPadding),
             title = "12 de febrero",

@@ -6,10 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.acano99.my_home.data.database.dao.FoodDao
 import org.acano99.my_home.domain.usecases.GetFoodsUseCase
 
-class FoodHomeViewModel(private val foodDao: FoodDao) : ViewModel() {
+class FoodHomeViewModel(
+    //private val foodDao: FoodDao
+) : ViewModel() {
     private val _uiState = MutableStateFlow<FoodHomeUiState>(FoodHomeUiState())
     var uiState: StateFlow<FoodHomeUiState> = _uiState
 
@@ -22,7 +23,7 @@ class FoodHomeViewModel(private val foodDao: FoodDao) : ViewModel() {
             state.copy(loading = true)
         }
         viewModelScope.launch {
-            foodDao.getFoods()
+
             runCatching {
                 GetFoodsUseCase().invoke()
             }.onSuccess { response ->

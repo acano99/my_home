@@ -9,6 +9,6 @@ expect val nativeModule: Module
 fun initKoin(config: KoinAppDeclaration? = null) {
     startKoin {
         config?.invoke(this)
-        modules(nativeModule, viewModelModule, databaseModule)
+        modules(nativeModule, viewModelModule, databaseModule, useCaseModule)
     }
 }

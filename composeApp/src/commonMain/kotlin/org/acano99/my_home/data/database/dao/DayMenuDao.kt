@@ -1,0 +1,24 @@
+package org.acano99.my_home.data.database.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
+import org.acano99.my_home.data.database.entity.DayMenuEntity
+import org.acano99.my_home.data.database.entity.FoodEntity
+import org.acano99.my_home.data.database.entity.FoodsWithMenuDay
+
+@Dao
+interface DayMenuDao {
+    @Transaction
+    @Query("SELECT * From DayMenu")
+    fun getDayMenus(): Flow<List<FoodsWithMenuDay>>
+
+    /*@Query("SELECT * From Food WHERE id = :id")
+    fun getDayMenuById(id: Int): Flow<FoodEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun newDayMenu(dayMenu: DayMenuEntity)*/
+}

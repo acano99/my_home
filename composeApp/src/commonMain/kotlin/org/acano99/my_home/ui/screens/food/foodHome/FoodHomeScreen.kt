@@ -7,15 +7,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -33,28 +30,24 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import myhome.composeapp.generated.resources.Res
 import myhome.composeapp.generated.resources.comidasPlanificadas
 import myhome.composeapp.generated.resources.pagosPlanificados
 import org.acano99.my_home.data.enums.MenuType
 import org.acano99.my_home.domain.model.FoodsWithDayMenu
 import org.acano99.my_home.ui.composables.HorizontalVerySmallSpacer
-import org.acano99.my_home.ui.composables.ThemeBottomNavigationBar
 import org.acano99.my_home.ui.composables.ThemeCard
 import org.acano99.my_home.ui.composables.ThemeDateHeader
 import org.acano99.my_home.ui.composables.ThemeDialogDatePicker
 import org.acano99.my_home.ui.composables.ThemeFoodIcon
 import org.acano99.my_home.ui.composables.ThemeIconHeader
 import org.acano99.my_home.ui.composables.ThemeInvoice
-import org.acano99.my_home.ui.composables.ThemeTopBar
 import org.acano99.my_home.ui.composables.VerticalHigSpacer
 import org.acano99.my_home.ui.composables.VerticalMediumSpacer
 import org.acano99.my_home.ui.composables.VerticalSmallSpacer
 import org.acano99.my_home.ui.screens.common.CommonScreen
 import org.acano99.my_home.ui.screens.common.ErrorScreen
 import org.acano99.my_home.ui.screens.common.LoadingScreen
-import org.acano99.my_home.ui.theme.mediumPadding
 import org.acano99.my_home.ui.theme.minPadding
 import org.acano99.my_home.ui.theme.smallPadding
 import org.acano99.my_home.ui.theme.veryHighPadding
@@ -66,8 +59,8 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @OptIn(KoinExperimentalAPI::class, ExperimentalMaterial3Api::class)
 @Composable
 fun FoodHomeScreen(
-    navController: NavController? = null,
-    viewModel: FoodHomeViewModel = koinViewModel()
+    viewModel: FoodHomeViewModel = koinViewModel(),
+    navigateToAddFood: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val datePickerState = rememberDatePickerState(
@@ -78,9 +71,7 @@ fun FoodHomeScreen(
     CommonScreen (
         fab = {
             FloatingActionButton(onClick = {
-                navController.let {
-                    navController?.navigate("addFood")
-                }
+                navigateToAddFood()
             }) {
                 Icon(imageVector = Icons.Default.AddCircle, contentDescription = "")
             }

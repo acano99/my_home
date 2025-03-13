@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import org.acano99.my_home.ui.composables.ThemeDateHeader
 import org.acano99.my_home.ui.composables.ThemeDialogDatePicker
 import org.acano99.my_home.ui.screens.common.CommonScreen
@@ -18,7 +17,7 @@ import org.acano99.my_home.ui.theme.smallPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BuildListHomeScreen(navController: NavController? = null) {
+fun BuildListHomeScreen() {
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = 1578096000000,
     )
